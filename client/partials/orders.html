@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col s6 offset-s2">
+    <div class="card">
+      <h4>Add a New Order</h4>
+
+      <form name="orderForm" novalidate ng-submit="create(group.user, group.product, group.slider)">
+          <select ng-model="group.user" class="browser-default col s3" ng-required="orderForm">
+            <option disabled value="">Select A User</option>
+            <option ng-repeat="user in users" ng-value="user" name="name" ng-bind="user.name"></option>
+          </select>
+          <ul>
+            <li class="red-text" ng-if="orderForm.$submitted && !orderForm.user.$valid">Please Select a Customer</li>
+          </ul>
+          <select ng-model="group.product" class="browser-default right col s3">
+            <option disabled value="">Select A Product</option>
+            <option ng-repeat="product in products" ng-value="product" name="product" ng-bind="product.name"></option>
+          </select>
+          <ul>
+            <li class="red-text right" ng-if="orderForm.$submitted && !orderForm.user.$valid">Please Select a Product</li>
+          </ul>
+          <input type="range" id="quantity" ng-model="group.slider" name="quantity" min="1" max="{{group.product.quantity}}">
+          <label for="quantity">Select a quantity</label>
+        <input type="submit" value="Add" style="margin-left: 10px" class="btn blue right">
+      </form>
+      <div class=" input-field col s3 right">
+        <input type="text" id="search" ng-model="orderModel">
+        <label for="search">Search Name...</label>
+      </div>
+      <table class="striped centered">
+        <thead>
+        <tr>
+          <th data-field="name">Customer Name</th>
+          <th data-field="product">Product</th>
+          <th data-field="quantity">Quantity</th>
+          <th data-field="date">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in orders | filter: orderModel">
+          <td ng-bind="order.customers[0].name"></td>
+          <td ng-bind="order.products[0].name"></td>
+          <td ng-bind="order.order_quantity"></td>
+          <td ng-bind="order.customers[0].created_at | date: dd/MM/yyyy"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+//    $(document).ready(function() {
+//        $('select').material_select();
+//    });
+</script>

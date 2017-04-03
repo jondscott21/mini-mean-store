@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col s3">
+    <form>
+      <div class="input-field">
+        <input type="text" ng-model="productSearch" id="search" name="search">
+        <label for="search">Search...</label>
+      </div>
+      <input type="submit" value="Filter" class="btn blue" ng-click="">
+    </form>
+  </div>
+  <div ng-repeat="product in products | filter: productSearch | limitTo: 5" class="col s1">
+    <a href="{{product.image}}"><img src="{{product.image}}" width="100" height="100"></a>
+    <p ng-bind="product.name"></p>
+    <p>({{product.quantity}} left)</p>
+  </div>
+</div>
+<div class="row center">
+  <a href="#!/products" style="font-size: large">View all products</a>
+</div>
+<div class="row">
+  <h5 class="center">Recent Orders</h5>
+  <ul class="center" ng-repeat="order in orders | orderBy: '-created_at' | limitTo: 3">
+    <li class="center" ng-repeat="i in order.products"></li>
+    <li class="center">{{order.customers[0].name}} purchased {{order.order_quantity}} {{order.products[0].name}} {{order.created_at | timeAgo}}</li>
+  </ul>
+</div>
+<div class="row center">
+  <a href="#!/orders" style="font-size: large">View all orders</a>
+</div>
+<div class="row">
+  <h5 class="center">New Customers</h5>
+  <p class="center" ng-repeat="user in users | orderBy: '-created_at' | limitTo: 3 ">{{user.name}} joined the store {{user.created_at | timeAgo}}</p>
+</div>
+<div class="row center">
+  <a href="#!/customers" style="font-size: large">View all customers</a>
+</div>
